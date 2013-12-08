@@ -1,4 +1,6 @@
 tektea
 ======
 
-blog.tektea.com
+rewrite the blog.tektea.com  
+
+

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" id="ng-app" ng-app="articalCtrlApp">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!--link rel="shortcut icon" href="../../docs-assets/ico/favicon.png"-->
+
+    <title>Tektea's blog</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/bootstrap-3.0.2/css/bootstrap.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="/main/main.css" rel="stylesheet">
+    <link href="/main/sticky-footer.css" rel="stylesheet">
+
+
+    <!-- Just for debugging purposes. Don't actually copy this line! -->
+    <!--[if lt IE 9]><script src="../../docs-assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+    <style type="text/css">
+      .container_top{
+        padding-top: 60px;
+      }
+    </style>
+
+  </head>
+
+  <body>
+
+    <div class="container">
+
+      <div class="masthead">
+        <h3 class="text-muted">Tektea's Blog - 学习 Study，分享 Community，提升 Improvement</h3>
+        <ul class="nav nav-justified">
+          <li class="active"><a href="/">文章 Articals</a></li>
+          <li><a href="#">归档 Archives</a></li>
+          <li><a href="#">作者们 The Writer</a></li>
+          <li><a href="#">关于我们 About Us</a></li>
+          <li><a href="/search">搜索 Search</a></li>
+        </ul>
+      </div>
+
+
+    <div class="container container_top" id="contentContainer" ng-controller="ArticalCtrl" ng-init="getAllArticalList()">
+
+      <!-- Main hero unit for a primary marketing message or call to action -->
+      <!--div class="hero-unit">
+        <h1>Hello, world!</h1>
+        <p>This is a template for a simple marketing or informational website. It includes a large callout called the hero unit and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
+        <p><a class="btn btn-primary btn-large">Learn more &raquo;</a></p>
+      </div-->
+
+      <!-- Example row of columns -->
+
+      <div class="col-md-12" ng-repeat="meta in metaList">
+          
+          <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4>
+                  {{meta.title}}
+                  <br>
+                  <small>
+                    <a href="/writer/{{meta.writer}}">{{meta.writer}}</a> 创作于 {{meta.creationDateTime}} 
+                  </small>
+                </h4>
+            </div>
+            <div class="panel-body">
+              <artical ng-bind-html="meta.summary"></artical>
+              <br>
+              <button type="button" class="btn btn-large btn-link"><a href="/artical/?title={{meta.title}}&writer={{meta.writer}}">继续阅读</a></button>
+              </article>
+            </div>
+      </div>
+
+    </div> <!-- /container -->
+
+      <!-- Site footer -->
+      <div id="footer">
+        <div class="container">
+          <p>&copy; Tektea@Utpioa-Project 2013</p>
+        </div>
+    </div>
+
+
+    </div> <!-- /container -->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="/jQuery-1.10.2/jquery-1.10.2-dev.js"></script>
+    <script src="/bootstrap-3.0.2/js/bootstrap.js"></script>
+    <script src="/angularjs-1.2.3/angular.js"></script>
+    <script src="/angularjs-1.2.3/angular-sanitize.js"></script>
+    <script src="/main/artical_ctrl.js"></script>
+  </body>
+</html>
