@@ -1,0 +1,26 @@
+<div>
+
+  <% for ( var i = 0 ; i < users.length; i++ ){%>
+    <% if (i % 4 === 0) {%>
+      <div class="row">
+    <%}%>
+  <div class="col-md-3">
+    <div class="jumbotron">
+      <%var link = '<a href="/writer/?name=' + users[i].user_name + '">' + users[i].user_name + '</a>'%>
+      <h2><%= link %></h2>
+      <p><%= users[i].desc%></p>
+      <small>
+        <%
+          if (users[i].isOwner){ %>
+            <%var link = '<a href="/writer/?name=' + users[i].user_name + '">管理</a>'%>
+            <%= link %>
+          <%}%>
+      </small>
+    </div>
+  </div>
+    <!--last one or the one can divide 4, then end one row-->
+    <% if ( (i > 3 && i % 4 === 0 ) || i + 1 === users.length ) {%>
+      </div>
+    <%}%>    
+  <%}%><!--end for-->
+</div>

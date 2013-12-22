@@ -42,15 +42,18 @@
       <div class="masthead">
         <h3 class="text-muted">Tektea's Blog - 学习 Study，分享 Community，提升 Improvement</h3>
         <ul class="nav nav-justified">
-          <li class="active"><a href="/">文章 Articles</a></li>
-          <li><a href="/writers">作者们 Writers</a></li>
+          <li><a href="/">文章 Articles</a></li>
+          <li class="active"><a href="/writers">作者们 Writers</a></li>
           <li><a href="/joinus">加入我们 Join Us</a></li>
           <li><a href="/search">搜索 Search</a></li>
         </ul>
       </div>
+  <div class="alert alert-success">
+    已经是作者？请<a href="/signin" class="alert-link">登录</a>，想成为作者？<a href="/joinus" class="alert-link">加入我们</a>
+  </div>
 
 
-    <div class="container container_top" id="contentContainer" ng-controller="ArticalCtrl" ng-init="getAllArticalList()">
+    <div class="container container_top" id="contentContainer" ng-controller="WritersCtrl" ng-init="getWriters()">
 
       <!-- Main hero unit for a primary marketing message or call to action -->
       <!--div class="hero-unit">
@@ -61,27 +64,7 @@
 
       <!-- Example row of columns -->
 
-      <div class="col-md-12" ng-repeat="meta in metaList">
-          
-          <div class="panel panel-default">
-            <div class="panel-heading">
-                <h4>
-                  {{meta.title}}
-                  <br>
-                  <small>
-                    <a href="/writer/?name={{meta.writer}}">{{meta.writer}}</a> | 创作于 {{meta.creationDateTime}} | 已阅读{{meta.viewCount}}次
-                  </small>
-                </h4>
-            </div>
-            <div class="panel-body">
-              <artical ng-bind-html="meta.summary"></artical>
-              <br>
-              <button type="button" class="btn btn-large btn-link"><a href="/article/?title={{meta.title}}&writer={{meta.writer}}">继续阅读</a></button>
-              </article>
-            </div>
-      </div>
-
-    </div> <!-- /container -->
+      <div ng-bind-html="html"></div>
 
       <!-- Site footer -->
       <div id="footer">
@@ -101,7 +84,8 @@
     <script src="/bootstrap-3.0.2/js/bootstrap.js"></script>
     <script src="/angularjs-1.2.3/angular.js"></script>
     <script src="/angularjs-1.2.3/angular-sanitize.js"></script>
+    <script src="/ejs_1.0/ejs_production.js"></script>
     <script src="/main/main_app.js"></script>
-    <script src="/main/artical_ctrl.js"></script>
+    <script src="/main/writers_ctrl.js"></script>
   </body>
 </html>

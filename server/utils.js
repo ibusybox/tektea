@@ -11,6 +11,8 @@ var walk = require('walk');
 var url = require('url');
 var querystring = require('querystring');
 
+var pagedown = require("pagedown");
+var converter = new pagedown.Converter();
 
 
 function stringEndWith(src, suffix){
@@ -49,6 +51,22 @@ function writeHTML2Client(path, response){
         }else{
             response.writeHead(200, {'Content-Type' : 'text/html'});
             response.write(data);
+            response.end();
+        }
+    });
+}
+
+function writeMKDown2Client(path, response){
+    fs.readFile( path, "utf8", function( err, data ){
+        if ( err ){
+            console.log("read file of " + path + " error");
+            console.log(err);
+            response.writeHead(500, {'Content-Type' : 'text/plain'});
+            response.end();
+        }else{
+            response.writeHead(200, {'Content-Type' : 'text/html'});
+            var html = converter.makeHtml(data);
+            response.write(html);
             response.end();
         }
     });
@@ -179,3 +197,4 @@ exports.writeHTML2Client = writeHTML2Client;
 exports.encryptAES = encryptAES;
 exports.decryptAES = decryptAES;
 exports.encryptAESFromFile = encryptAESFromFile;
+exports.writeMKDown2Client = writeMKDown2Client;

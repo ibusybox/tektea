@@ -1,7 +1,7 @@
 var fs = require('fs');
 
 var ALBUM_ROOT = process.cwd() + '/server/data/public/protected/';
-var authMgmt = require('../usermgmt/auth_question');
+var authMgmt = require('../usermgmt/auth');
 
 
 

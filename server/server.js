@@ -44,7 +44,7 @@ var allowedPath = function(regex){
 
 //product and /home/products are static html, script, jpg files
 app.use(express.static(__dirname + '/static'));
-app.use(express.static(__dirname + '/data/articals'));
+app.use(express.static(__dirname + '/data/articles'));
 
 //allowed path list
 //   /data/articals 2 level sub-directories image files are allowned, other files are not allowed
@@ -97,48 +97,57 @@ app.use( express.bodyParser( /*{uploadDir: __dirname + '/uploads'}*/ ) );
 
 //auth management
 var utils = require('./utils');
-var authMgmt = require('./usermgmt/auth_question');
+var authMgmt = require('./usermgmt/auth');
 var articalMgmt = require('./articalmgmt/articalmgmt');
 var albumMgmt = require('./albummgmt/albummgmt');
+var userMgmt = require('./usermgmt/usermgr');
 
 //home page
 app.get('/', function(request, response){
     utils.writeHTML2Client(__dirname + '/static/main/main.html', response);
 } );
 
-app.get('/artical', function(request, response){   
+app.get('/article', function(request, response){   
     utils.writeHTML2Client(__dirname + '/static/main/artical_content.html', response);
 });
 
-app.get('/artical/meta', articalMgmt.getAllArticalMetaData);
-app.get('/artical/content', articalMgmt.getArticalAsHTML);
+app.get('/article/meta', articalMgmt.getAllArticalMetaData);
+app.get('/article/content', articalMgmt.getArticalAsHTML);
 
 app.get('/search', function(request, response){   
     utils.writeHTML2Client(__dirname + '/static/main/search.html', response);
 });
 
-
-app.get('/artical/new', function(request, response){
-    authMgmt.checkSingin(request, response, function(){
-        utils.writeHTML2Client(__dirname + '/static/20434/artical_new.html', response);
-    });    
+app.get('/joinus', function(request, response){
+    utils.writeHTML2Client(__dirname + '/static/main/joinus.html', response);
 });
 
-app.post('/artical/new/json', articalMgmt.newArtical);
-
-app.get('/albums', function(request, response){
-    authMgmt.checkSingin(request, response, function(){
-        utils.writeHTML2Client(__dirname + '/static/20434/album.html', response);
-    });
+app.get('/joinus/json', function(request, response){
+    utils.writeMKDown2Client(__dirname + '/data/joinus/joinus.md', response);
 });
-app.get('/albums/edit', function(request, response){
-    authMgmt.checkSingin(request, response, function(){
-        utils.writeHTML2Client(__dirname + '/static/20434/upload.html', response);
-    });
-});
-app.get('/albums/meta', albumMgmt.getAlbumMeta);
-app.post('/albums/new', albumMgmt.createAlbum);
 
+app.get('/register', function(request, response){
+    utils.writeHTML2Client(__dirname + '/static/main/register.html', response);
+});
+
+app.post('/register/post', authMgmt.register);
+app.get('/signin', function(request, response){
+    utils.writeHTML2Client(__dirname + '/static/main/signin.html', response);
+});
+app.post('/signin/post', authMgmt.signin);
+
+app.get('/writers', function(request, response){
+    utils.writeHTML2Client(__dirname + '/static/main/writers.html', response);
+});
+
+app.get('/writer', function(request, response){
+    utils.writeHTML2Client(__dirname + '/static/main/writer_detail.html', response);
+});
+
+
+app.get('/writers/json', userMgmt.getAllUser4Display);
+
+app.get('/article/writer', articalMgmt.getAllArticleByWriter);
 
 app.listen(80);
 

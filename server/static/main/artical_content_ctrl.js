@@ -7,7 +7,7 @@ function ArticalContentCtrl($scope, $http){
         var writer = getURLParameter('writer');
         $scope.artical.title = title;
         $http({
-            url: '/artical/content/?title=' + encodeURIComponent(title) + '&writer=' + writer,
+            url: '/article/content/?title=' + encodeURIComponent(title) + '&writer=' + writer,
             method: 'GET',
             headers: {'Content-Type': 'application/x-www-form-encoded; charset=UTF-8'}
         }).success( function( data, status ){
@@ -15,6 +15,7 @@ function ArticalContentCtrl($scope, $http){
             $scope.artical.writer = data.writer;
             $scope.artical.creationDateTime = data.creationDateTime;
             $scope.artical.category = data.category;
+            $scope.artical.viewCount = data.viewCount;
         } ).error( function( data, status ){
             $scope.artical.articalHTML = '<p>server error ' + status + '</p>';
         });

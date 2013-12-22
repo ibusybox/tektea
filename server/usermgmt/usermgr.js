@@ -1,29 +1,6 @@
 var fs = require('fs');
 
-var USER_FILE_PATH = process.cwd() + "/server/data/user";
-
-/**
-* @method find user object by user email
-* @param string, the user email
-**/
-function findUserByEmail(email, callback){
-    fs.readFile(USER_FILE_PATH, "utf8", function (err, data){
-        if ( err ){
-            callback(err, null);
-        }else{
-            var users = JSON.parse(data);
-            var targetUser = users[email];
-            if ( targetUser ){
-                callback(null, targetUser);
-            }else{
-                callback("user for email[" + email + "] can not found.", null);
-            }
-
-        }
-    });
-
-} 
-
+var USER_FILE_PATH = process.cwd() + "/server/data/auth_data/users.json";
 
 /**
 * @method find user object by user name
@@ -34,14 +11,23 @@ function findUserByName(name, callback){
         if ( err ){
             callback(err, null);
         }else{
-            var users = JSON.parse(data);
-            var targetUser = users[name];
-            if ( targetUser ){
-                callback(null, targetUser);
+            var found = false;
+            //file is empty
+            if ( data == null || '' == data ){
+                //do nothing
             }else{
-                callback("user for name[" + name + "] can not found.", null);
+                var users = JSON.parse(data);
+                for ( var i = 0; i < users.length; i++ ){
+                    if ( users[i].name == name ){
+                        callback(null, users[i]);
+                        found = true;
+                        break;
+                    }
+                }
             }
-
+            if ( ! found ){
+                callback( "user for name[" + name + "] could not be found.", null );
+            }
         }
     });
 
@@ -56,15 +42,18 @@ function updateUser(user, callback){
         if ( err ){
             callback(err, null);
         }else{
-            var users = JSON.parse(users);
-
-            //try to find exist user
+            var users = [];
             var exist = -1;
-            for ( var i = 0; i < users.length; i++ ){
-                if (users[i].email == user.email){
-                    exist = i;
-                    break;
-                }
+
+            if ( data != null && data != '' ){
+                users = JSON.parse(data);
+                //try to find exist user
+                for ( var i = 0; i < users.length; i++ ){
+                    if (users[i].name == user.name){
+                        exist = i;
+                        break;
+                    }
+                }                   
             }
 
             //if use exist then update, else add a new one
@@ -88,25 +77,62 @@ function updateUser(user, callback){
 
 }
 
-function isAdminRole( username, callback){
-    if ( ! username ){
-        return callback( null, false );
+/**
+* Return the current sign in user name
+* input: none
+*
+* output: {user_name: xxx}
+*/
+function getCurrentUser(request, response){
+    console.log(typeof request.session.user_name);
+    var isLogin = (typeof request.session != "undefined" ) && ( typeof request.session.user_name != 'undefined' );
+    console.log('isLogin = ' + isLogin);
+    if ( isLogin ){
+        var result = {user_name: request.session.username};
+        response.writeHead(200, {'Content-Type' : 'text/json'});
+        response.write(JSON.stringify(result));
+        response.end();
+    }else{
+        response.writeHead(404, {'Content-Type' : 'text/plain'});
+        response.end();
     }
+}
 
-    findUserByName( username, function( err, user ){
+/**
+* Get all user info for the writers page display.
+* intput data: none
+*
+* output data:
+* {users: [{user_name: xxx, desc: xxxx, isOwner: true/false}]}
+*/
+function getAllUser4Display(request, response){
+    //if user already signin, then the current user is the owner
+    var current_user = '';
+    if ( request.session.user_name && request.session.user_name != 'undefined' && request.session.user_name != null ){
+        current_user = request.session.user_name;
+    }
+    
+    var result = {users: []};
+
+    fs.readFile(USER_FILE_PATH, "utf8", function(err, data){
         if ( err ){
-            callback( err, null );
+            console.log('unable to read ' + USER_FILE_PATH);
+            response.writeHead(500, {'Content-Type' : 'text/plain'});
+            response.end();
         }else{
-            if ( user.role.indexOf('admin') != -1 ){
-                callback( null, true );
-            }else{
-                callback( null, false );
+            var users = JSON.parse(data);
+            var user;
+            for( var i = 0 ; i < users.length; i++ ){
+                user = {user_name: users[i].name, desc: users[i].desc, isOwner: current_user == users[i].name};
+                result.users.push(user);
             }
+            response.writeHead(200, {'Content-Type' : 'text/json'});
+            response.write(JSON.stringify(result));
+            response.end();
         }
-    } );
+    });
+}
 
-} 
-
-exports.findUserByEmail = findUserByEmail;
 exports.updateUser = updateUser;
-exports.isAdminRole = isAdminRole;
+exports.findUserByName = findUserByName;
+exports.getAllUser4Display = getAllUser4Display;
