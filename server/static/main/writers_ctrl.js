@@ -46,14 +46,15 @@ function WritersCtrl($scope, $http){
             headers: {'Content-Type': 'application/x-www-form-encoded;charset=UTF-8'}
         }).success( function ( data, status ){
             var targetCategory = getURLParameter('category');
+            var targetWriter = getURLParameter('writer');
             var dataFilterByCategory = {metaList: []};
             for ( var i = 0; i < data.metaList.length; i++ ){
-                if ( data.metaList[i].category == targetCategory ){
+                if ( data.metaList[i].category == targetCategory && data.metaList[i].writer == targetWriter ){
                     dataFilterByCategory.metaList.push(data.metaList[i]);
                 }
             }
 
-            $scope.articleByCategory = new EJS( {url: '/main/article_summary.ejs'} ).render( dataFilterByCategory );
+            $scope.articleByCategory = new EJS( {url: '/main/article_table.ejs'} ).render( dataFilterByCategory );
 
         } ).error( function ( data, status ){
             //do nothing

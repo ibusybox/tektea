@@ -4,6 +4,7 @@
   <hr>
   
   <br>
+  <h4>所有文章类别</h4>
   <% var count = 0; %>
   <%for ( var i in categories ){%>
     <% if (count % 6 === 0) {%>
@@ -16,7 +17,7 @@
       <%= cat_image %>
       <br><br>
 
-       <a href="<%= '/article/category/?category=' + i %>">
+       <a href="<%= '/article/category/?category=' + i %>&writer=<%= writer.name %>">
          <%= i %><span class="badge"><%= categories[i] %></span>
       </a>
 
@@ -29,4 +30,18 @@
     <%}%> 
     <% count = count + 1; %>     
   <%}%>
+
+
 </div>
+<hr>
+<br>
+
+<h4>文章源</h4>
+
+<br>
+<hr>
+<p class="col-md-offset-11 col-md-1">
+  <button type="button" class="btn btn-primary"> 管理 </button>
+</p>
+<br>
+<br>
