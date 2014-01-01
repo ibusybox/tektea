@@ -15,8 +15,6 @@
 
     <!-- Custom styles for this template -->
     <link href="/main/main.css" rel="stylesheet">
-    <link href="/main/sticky-footer.css" rel="stylesheet">
-    <link href="/main/navbar.css" rel="stylesheet">
 
 
     <!-- Just for debugging purposes. Don't actually copy this line! -->
@@ -28,9 +26,6 @@
       <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
     <![endif]-->
     <style type="text/css">
-      .container_top{
-        padding-top: 60px;
-      }
     </style>
 
   </head>
@@ -39,18 +34,8 @@
 
     <div class="container">
 
-      <div class="masthead">
-        <h3 class="text-muted">Tektea's Blog - 学习 Study，分享 Community，提升 Improvement</h3>
-        <ul class="nav nav-justified">
-          <li class="active"><a href="/">文章 Articles</a></li>
-          <li><a href="/writers">作者们 Writers</a></li>
-          <li><a href="/joinus">加入我们 Join Us</a></li>
-          <li><a href="/search">搜索 Search</a></li>
-        </ul>
-      </div>
 
-
-    <div class="container container_top" id="contentContainer" ng-controller="ArticalCtrl" ng-init="getAllArticalList()">
+    <div class="container" id="contentContainer" ng-controller="WritersCtrl" ng-init="getWriterDetail()">
 
       <!-- Main hero unit for a primary marketing message or call to action -->
       <!--div class="hero-unit">
@@ -60,13 +45,14 @@
       </div-->
 
       <!-- Example row of columns -->
-      <div ng-bind-html="articalSummaryHTML"></div>
-    </div> <!-- /container -->
 
+      <div class="col-md-12">
+          <artical ng-bind-html="writerDetail"></artical>
+      </div> <!-- /col-md-12 -->
       <!-- Site footer -->
       <div id="footer">
         <div class="container">
-          <p>&copy; Tektea@Utpioa-Project 2013</p>
+          <p class="text-muted credit">&copy; Tektea@Utpioa-Project 2013</p>
         </div>
     </div>
 
@@ -79,10 +65,11 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="/jQuery-1.10.2/jquery-1.10.2-dev.js"></script>
     <script src="/bootstrap-3.0.2/js/bootstrap.js"></script>
-    <script src="/ejs_1.0/ejs_production.js"></script>
     <script src="/angularjs-1.2.3/angular.js"></script>
     <script src="/angularjs-1.2.3/angular-sanitize.js"></script>
+    <script src="/ejs_1.0/ejs_production.js"></script>
+    <script src="/main/utils.js"></script>
     <script src="/main/main_app.js"></script>
-    <script src="/main/artical_ctrl.js"></script>
+    <script src="/main/writers_ctrl.js"></script>
   </body>
 </html>

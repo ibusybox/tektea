@@ -149,6 +149,11 @@ app.get('/writers/json', userMgmt.getAllUser4Display);
 
 app.get('/article/writer', articalMgmt.getAllArticleByWriter);
 
+app.get('/article/category', function(request, response){
+    utils.writeHTML2Client(__dirname + '/static/main/view_article_by_category.html', response);
+});
+
+
 app.listen(80);
 
 console.log("app listening on port 80.");

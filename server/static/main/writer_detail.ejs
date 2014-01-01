@@ -1,29 +1,32 @@
 <div>
   <h1><%= writer.name %></h1>
-  <blockquote>
-    <p><%= writer.desc %></p>
-  </blockquote>
+  <p><%= writer.desc %></p>
+  <hr>
   
+  <br>
+  <% var count = 0; %>
+  <%for ( var i in categories ){%>
+    <% if (count % 6 === 0) {%>
+      <div class="row">
+    <%}%>
 
-  <table class="table table-hover">
-    <thead>
-      <tr>
-        <th>文章标题</th>
-        <th>类别</th>
-        <th>阅读次数</th>
-        <th>最后修改时间</th>
-      </tr>
-    </thead>
-      <% for( var i = 0 ; i < writer.articles.length; i++){ %>
-        <tr>
-          <% var link = '<a href="/article/?title=' + writer.articles[i].title + '&writer=' + writer.name + '">' + writer.articles[i].title + '</a>' %>
-          <td><%= link %></td>
-          <td><%= writer.articles[i].category %></td>
-          <td><%= writer.articles[i].viewCount %></td>
-          <td><%= writer.articles[i].lastModified %></td>
-        </tr>
-      <%}%>
-    <tbody>
-    </tbody>
-  </table>
+    <div class="col-md-2">
+    <% if (categories.hasOwnProperty(i)){%>
+      <% var cat_image = '<img src="' + '/main/images/' + i + '.png' + '"' + ' class="img-rounded">';%>
+      <%= cat_image %>
+      <br><br>
+
+       <a href="<%= '/article/category/?category=' + i %>">
+         <%= i %><span class="badge"><%= categories[i] %></span>
+      </a>
+
+    <%}%>
+    </div>
+
+    <!--last one or the one can divide 6, then end one row-->
+    <% if ( (count > 5 && count % 6 === 0 ) || count + 1 === categories.length ) {%>
+      </div>
+    <%}%> 
+    <% count = count + 1; %>     
+  <%}%>
 </div>

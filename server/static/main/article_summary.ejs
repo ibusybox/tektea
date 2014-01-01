@@ -1,0 +1,24 @@
+
+<% for ( var i = 0; i < metaList.length; i++){%>
+
+      <div class="col-md-12">
+          
+          <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4>
+                  <%= metaList[i].title %>
+                  <br>
+                  <small>
+                    <a href="/writer/?name=<%= metaList[i].writer %>"><%= metaList[i].writer %></a> | 创作于 <%= metaList[i].creationDateTime %> | 已阅读<%= metaList[i].viewCount %>次
+                  </small>
+                </h4>
+            </div>
+            <div class="panel-body">
+              <artical ng-bind-html=<%= metaList[i].summary %>></artical>
+              <br>
+              <button type="button" class="btn btn-large btn-link"><a href="/article/?title=<%= metaList[i].title %>&writer=<%= metaList[i].writer %>">继续阅读</a></button>
+              </article>
+            </div>
+          </div>
+      </div>  
+<%}%>

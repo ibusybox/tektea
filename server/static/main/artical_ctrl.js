@@ -11,10 +11,10 @@ function ArticalCtrl($scope, $http, signinService){
             method: 'GET',
             headers: {'Content-Type': 'application/x-www-form-encoded;charset=UTF-8'}
         }).success( function ( data, status ){
-            $scope.metaList = data.metaList;
+            $scope.articalSummaryHTML = new EJS( {url: '/main/article_summary.ejs'} ).render( data );
         } ).error( function ( data, status ){
             //do nothing
-            $scope.metaList = {};
+            $scope.articalSummaryHTML = '';
         } );
     };
 }
