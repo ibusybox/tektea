@@ -1,6 +1,8 @@
 //angular.module('articalCtrlApp', ['ngSanitize']);
 
 function WritersCtrl($scope, $http){
+    $scope.connectionList = ['Dropbox', 'Evernote'];
+    $scope.selectedConnection = $scope.connectionList[0];
 
     $scope.getWriters = function(){
         //check if user is signed in then add a "Mine" nav bar

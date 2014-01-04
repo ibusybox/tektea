@@ -47,7 +47,39 @@
       <!-- Example row of columns -->
 
       <div class="col-md-12">
-          <artical ng-bind-html="writerDetail"></artical>
+          <div ng-bind-html="writerDetail"></div>
+
+          <h4>文章源</h4>
+            <a class="btn btn-primary btn-xs" data-toggle="modal" data-target="#myModal">+</a>
+            <br>
+            <hr>
+            
+            <br>
+            
+            <!-- Modal -->
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="           true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                  </div>
+                  
+                  <div class="modal-body">
+                    <p>链接你的帐号，链接文章。支持帐号类型：Dropbox, Evernote</p>
+                    <select ng-model="selectedConnection" ng-options="o for o in connectionList">
+                    </select>
+                  </div>
+                  
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary">确定</button>
+                  </div>
+
+                </div>
+              </div>
+            </div><!--model fade-->
+
       </div> <!-- /col-md-12 -->
       <!-- Site footer -->
       <div id="footer">
@@ -65,6 +97,7 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="/jQuery-1.10.2/jquery-1.10.2-dev.js"></script>
     <script src="/bootstrap-3.0.2/js/bootstrap.js"></script>
+    <script src="/bootstrap-3.0.2/js/modal.js"></script>
     <script src="/angularjs-1.2.3/angular.js"></script>
     <script src="/angularjs-1.2.3/angular-sanitize.js"></script>
     <script src="/ejs_1.0/ejs_production.js"></script>
